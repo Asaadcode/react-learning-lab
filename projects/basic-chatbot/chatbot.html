@@ -79,6 +79,21 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+
+    
+      function useAutoScroll(dependencies) {
+        const chatMessagesRef = React.useRef(null);
+
+        React.useEffect(() => {
+          const containerElem = chatMessagesRef.current;
+          if (containerElem) {
+            containerElem.scrollTop = containerElem.scrollHeight;
+          }
+        }, dependencies); 
+
+        return chatMessagesRef;
+      }
+
       function ChatInput({ chatMessages, setChatMessages }) {
         const [inputText, setInputText] = React.useState('');
         const [isLoading, setIsLoading] = React.useState(false);
@@ -110,7 +125,12 @@
           setChatMessages([
             ...newChatMessages,
             {
-              message: 'Loading...',
+              message: (
+                <img 
+                  src="https://supersimple.dev/images/loading-spinner.gif" 
+                  style={{ height: '40px', margin: '-15px' }} 
+                />
+              ),
               sender: 'robot',
               id: crypto.randomUUID()
             }
@@ -135,7 +155,7 @@
         return (
           <div className='chat-input-container'>
             <input
-              placeholder="Send a message to Chatbot"
+              placeholder="Send a message to THINKAAD-demo"
               size="30"
               onChange={saveInputText}
               value={inputText}
@@ -178,17 +198,17 @@
       }
 
       function ChatMessages({ chatMessages }) {
-        const chatMessagesRef = React.useRef(null);
-
-        React.useEffect(() => {
-          const containerElem = chatMessagesRef.current;
-          if (containerElem) {
-            containerElem.scrollTop = containerElem.scrollHeight;
-          }
-        }, [chatMessages]);
+        const chatMessagesRef = useAutoScroll([chatMessages]);
 
         return (
           <div className='chat-messages-container' ref={chatMessagesRef}>
+            
+            {chatMessages.length === 0 && (
+              <p style={{ textAlign: 'center', color: 'rgb(120, 120, 120)' }}>
+                Welcome to the THINKAAD-demo! What's on your mind Today?
+              </p>
+            )}
+
             {chatMessages.map((chatMessage) => {
               return (
                 <ChatMessage
@@ -203,23 +223,7 @@
       }
 
       function App() {
-        const [chatMessages, setChatMessages] = React.useState([{
-          message: 'hello chatbot',
-          sender: 'user',
-          id: 'id1'
-        }, {
-          message: 'Hello! How can I help you?',
-          sender: 'robot',
-          id: 'id2'
-        }, {
-          message: 'can you get me todays date?',
-          sender: 'user',
-          id: 'id3'
-        }, {
-          message: 'Today is September 27',
-          sender: 'robot',
-          id: 'id4'
-        }]);
+        const [chatMessages, setChatMessages] = React.useState([]);
 
         return (
           <div className='app-container'>
