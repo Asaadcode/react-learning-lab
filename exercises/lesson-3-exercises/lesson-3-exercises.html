@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>lesson-3-exercises</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+    //   function Counter({ count, onClick }) {
+    //     return (
+    //       <div>
+    //         <button onClick={onClick}>
+    //           {count === 1 ? 'Clicked 1 time' : `Clicked ${count} times`}
+    //         </button>
+    //       </div>
+    //     );
+    //   }
+
+    //   function App() {
+    //     const [count, setCount] = React.useState(0);
+        
+    //     function handleClick() {
+    //       console.log('clicked');
+    //       setCount(count + 1);
+    //     }
+
+    //     return (
+    //       <div>
+    //         <Counter count={count} onClick={handleClick} />
+    //         <Counter count={count} onClick={handleClick} />
+            
+    //         {/* Reset button with correct syntax */}
+    //         <button onClick={() => setCount(0)}>
+    //           Reset
+    //         </button>
+    //       </div>
+    //     );
+    //   }
+
+
+function App(){
+const [text, setText] = React.useState('');
+return(
+
+<div>
+<input onChange={(event) => setText(event.target.value)} value={text} />
+<button onClick={()=>setText('')}>Reset</button>
+<button onClick={()=>setText('Asaad')}>Example</button>
+<p>Hello {text}</p>
+</div>
+)
+  
+}
+
+    
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html>
